@@ -1,0 +1,272 @@
+import java.util.*;
+
+/**
+ * COER University - Foundation of Java Lab Sheet 9: Collections
+ * Solutions for Q1 to Q15
+ */
+public class LabSheet9Collections {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("==================================================");
+        System.out.println("COER UNIVERSITY - FOUNDATION OF JAVA LAB SHEET 9");
+        System.out.println("==================================================");
+        
+        // Q1: Student List
+        System.out.println("\n--- Q1. Student List ---");
+        ArrayList<String> students = new ArrayList<>();
+        students.add("Aarav");
+        students.add("Priya");
+        students.add("Rahul");
+        students.add("Sneha");
+        students.add("Amit");
+        students.add("Neha");
+        students.add("Vikram");
+        students.add("Pooja");
+        students.add("Rohit");
+        students.add("Anjali");
+        
+        System.out.println("Student Names: " + students);
+        System.out.println("Total Size: " + students.size());
+
+        // Q2: Marks List
+        System.out.println("\n--- Q2. Marks List ---");
+        ArrayList<Integer> marks = new ArrayList<>(Arrays.asList(85, 92, 78, 90, 88));
+        System.out.println("Marks List: " + marks);
+        System.out.println("First Element: " + marks.get(0));
+        System.out.println("Middle Element (Index 2): " + marks.get(marks.size() / 2));
+        System.out.println("Last Element: " + marks.get(marks.size() - 1));
+
+        // Q3: Update Student Name
+        System.out.println("\n--- Q3. Update Student Name ---");
+        ArrayList<String> studentList = new ArrayList<>(Arrays.asList("Karan", "Divya", "Manish", "Ritu", "Tarun"));
+        System.out.println("Original List: " + studentList);
+        studentList.set(1, "Divya Sharma");
+        System.out.println("After set(1, 'Divya Sharma'): " + studentList);
+        studentList.remove(3);
+        System.out.println("After removing fourth element: " + studentList);
+
+        // Q4: Unique Departments
+        System.out.println("\n--- Q4. Unique Departments ---");
+        HashSet<String> departments = new HashSet<>(Arrays.asList(
+            "Computer Science", "Mechanical", "Civil", "Computer Science", 
+            "Electrical", "Mechanical", "Electronics", "Civil"
+        ));
+        System.out.println("Unique Departments (HashSet): " + departments);
+
+        // Q5: Sorted Roll Numbers
+        System.out.println("\n--- Q5. Sorted Roll Numbers ---");
+        TreeSet<Integer> rollNumbers = new TreeSet<>(Arrays.asList(105, 101, 110, 103, 108, 102, 109, 104, 106, 107));
+        System.out.println("Sorted Roll Numbers (TreeSet): " + rollNumbers);
+
+        // Q6: ArrayList Searching
+        System.out.println("\n--- Q6. ArrayList Searching ---");
+        ArrayList<String> courses = new ArrayList<>(Arrays.asList("Java Programming", "Data Structures", "Operating Systems", "DBMS", "Computer Networks"));
+        System.out.println("Available Courses: " + courses);
+        String searchCourse = "DBMS";
+        System.out.println("Searching for: " + searchCourse);
+        if (courses.contains(searchCourse)) {
+            System.out.println("Course '" + searchCourse + "' exists in the list.");
+        } else {
+            System.out.println("Course '" + searchCourse + "' does not exist in the list.");
+        }
+
+        // Q7: Collections Utility Methods
+        System.out.println("\n--- Q7. Collections Utility Methods ---");
+        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(45, 12, 89, 34, 12, 56, 89, 78));
+        System.out.println("Original Numbers: " + numbers);
+        Collections.sort(numbers);
+        System.out.println("Sorted (sort): " + numbers);
+        Collections.reverse(numbers);
+        System.out.println("Reversed (reverse): " + numbers);
+        Collections.sort(numbers);
+        System.out.println("Min value (min): " + Collections.min(numbers));
+        System.out.println("Max value (max): " + Collections.max(numbers));
+        int freqQuery = 89;
+        System.out.println("Frequency of " + freqQuery + " (frequency): " + Collections.frequency(numbers, freqQuery));
+
+        // Q8: LinkedList Student Queue
+        System.out.println("\n--- Q8. LinkedList Student Queue ---");
+        LinkedList<String> labQueue = new LinkedList<>();
+        labQueue.addLast("Student A");
+        labQueue.addLast("Student B");
+        labQueue.addLast("Student C");
+        System.out.println("Initial Lab Queue: " + labQueue);
+        labQueue.addFirst("VIP Student");
+        System.out.println("After addFirst('VIP Student'): " + labQueue);
+        labQueue.addLast("Late Student");
+        System.out.println("After addLast('Late Student'): " + labQueue);
+        System.out.println("Removed First: " + labQueue.removeFirst());
+        System.out.println("Removed Last: " + labQueue.removeLast());
+        System.out.println("Final Queue: " + labQueue);
+
+        // Q9: ListIterator Modification
+        System.out.println("\n--- Q9. ListIterator Modification ---");
+        List<String> frameworkList = new ArrayList<>(Arrays.asList("Spring", "Hibernate", "Struts", "JSF"));
+        System.out.println("Original List: " + frameworkList);
+        ListIterator<String> litr = frameworkList.listIterator();
+        while (litr.hasNext()) {
+            String item = litr.next();
+            if (item.equals("Struts")) {
+                litr.set("Spring Boot");
+            }
+            if (item.equals("Hibernate")) {
+                litr.add("Micronaut");
+            }
+        }
+        System.out.println("Modified List using ListIterator: " + frameworkList);
+
+        // Q10: List vs Set Experiment
+        System.out.println("\n--- Q10. List vs Set Experiment ---");
+        List<Integer> inputVals = Arrays.asList(40, 10, 30, 20, 10, 40);
+        ArrayList<Integer> expArrayList = new ArrayList<>(inputVals);
+        HashSet<Integer> expHashSet = new HashSet<>(inputVals);
+        System.out.println("Input Values: " + inputVals);
+        System.out.println("ArrayList (Maintains insertion order, allows duplicates): " + expArrayList);
+        System.out.println("HashSet (Unordered, removes duplicates): " + expHashSet);
+
+        // Q11: Sorted Student IDs
+        System.out.println("\n--- Q11. Sorted Student IDs ---");
+        TreeSet<Integer> studentIds = new TreeSet<>();
+        studentIds.addAll(Arrays.asList(104, 101, 105, 101, 102, 105, 103));
+        System.out.println("Unique Sorted Student IDs: " + studentIds);
+        System.out.println("First ID (first): " + studentIds.first());
+        System.out.println("Last ID (last): " + studentIds.last());
+        System.out.println("Higher than 103 (higher): " + studentIds.higher(103));
+        System.out.println("Lower than 103 (lower): " + studentIds.lower(103));
+
+        // Q12: Hospital Patient List
+        System.out.println("\n--- Q12. Hospital Patient List ---");
+        ArrayList<String> patientNames = new ArrayList<>(Arrays.asList("John Doe", "Jane Smith", "Robert Brown"));
+        HashSet<String> patientIdsSet = new HashSet<>(Arrays.asList("PID001", "PID002", "PID003"));
+        
+        System.out.println("Patients: " + patientNames);
+        System.out.println("Patient IDs: " + patientIdsSet);
+        
+        patientNames.add("Emily Davis");
+        patientIdsSet.add("PID004");
+        System.out.println("After Adding - Patients: " + patientNames);
+        
+        String searchPat = "Jane Smith";
+        if (patientNames.contains(searchPat)) {
+            System.out.println("Patient " + searchPat + " found.");
+        }
+        
+        patientNames.remove("John Doe");
+        patientIdsSet.remove("PID001");
+        System.out.println("After Removing John Doe - Patients: " + patientNames);
+
+        // Q13: ListIterator Report
+        System.out.println("\n--- Q13. ListIterator Report ---");
+        ArrayList<String> subjectList = new ArrayList<>(Arrays.asList("Java", "Python", "C++", "DSA", "OS"));
+        ListIterator<String> subjectItr = subjectList.listIterator();
+        
+        System.out.println("Traversing Forward:");
+        while (subjectItr.hasNext()) {
+            System.out.println("Index: " + subjectItr.nextIndex() + ", Element: " + subjectItr.next());
+        }
+        
+        System.out.println("Traversing Backward:");
+        while (subjectItr.hasPrevious()) {
+            System.out.println("Index: " + subjectItr.previousIndex() + ", Element: " + subjectItr.previous());
+        }
+
+        // Q14: ArrayList vs LinkedList Lab
+        System.out.println("\n--- Q14. ArrayList vs LinkedList Lab ---");
+        ArrayList<String> testArr = new ArrayList<>();
+        LinkedList<String> testLink = new LinkedList<>();
+        testArr.add("Item 1"); testArr.add("Item 2");
+        testLink.add("Item 1"); testLink.add("Item 2");
+        
+        System.out.println("ArrayList get(0): " + testArr.get(0) + ", Size: " + testArr.size());
+        System.out.println("LinkedList get(0): " + testLink.get(0) + ", Size: " + testLink.size());
+        
+        testArr.remove(0);
+        testLink.remove(0);
+        System.out.println("After removal - ArrayList size: " + testArr.size() + ", LinkedList size: " + testLink.size());
+        System.out.println("Observation: ArrayList provides fast random access O(1), whereas LinkedList provides fast insertions/deletions O(1).");
+
+        // Q15: Mini Student Collection Management System
+        System.out.println("\n--- Q15. Mini Student Collection Management System ---");
+        MiniStudentSystem managementSystem = new MiniStudentSystem();
+        managementSystem.demoSystem();
+        
+        scanner.close();
+    }
+}
+
+class MiniStudentSystem {
+    private ArrayList<String> insertionOrderList = new ArrayList<>();
+    private HashSet<String> uniqueIdSet = new HashSet<>();
+    private TreeSet<String> sortedIdSet = new TreeSet<>();
+
+    public void addStudent(String id, String name) {
+        if (uniqueIdSet.add(id)) {
+            sortedIdSet.add(id);
+            insertionOrderList.add(id + " - " + name);
+            System.out.println("Student added successfully: " + name + " (ID: " + id + ")");
+        } else {
+            System.out.println("Error: Student ID " + id + " already exists!");
+        }
+    }
+
+    public void removeStudent(String id) {
+        boolean removed = false;
+        Iterator<String> it = insertionOrderList.iterator();
+        while (it.hasNext()) {
+            String record = it.next();
+            if (record.startsWith(id + " -")) {
+                it.remove();
+                removed = true;
+                break;
+            }
+        }
+        if (removed) {
+            uniqueIdSet.remove(id);
+            sortedIdSet.remove(id);
+            System.out.println("Student with ID " + id + " removed successfully.");
+        } else {
+            System.out.println("Student ID " + id + " not found.");
+        }
+    }
+
+    public void searchStudent(String id) {
+        if (uniqueIdSet.contains(id)) {
+            System.out.println("Student ID " + id + " found in system.");
+        } else {
+            System.out.println("Student ID " + id + " not found.");
+        }
+    }
+
+    public void displayAll() {
+        System.out.println("\n--- Student Records (ArrayList - Insertion Order) ---");
+        for (String s : insertionOrderList) {
+            System.out.println(s);
+        }
+        System.out.println("Total Count: " + insertionOrderList.size());
+        
+        System.out.println("\n--- Unique Student IDs (HashSet) ---");
+        System.out.println(uniqueIdSet);
+
+        System.out.println("\n--- Sorted Student IDs (TreeSet) ---");
+        System.out.println(sortedIdSet);
+    }
+
+    public void demoSystem() {
+        addStudent("S105", "Aarav");
+        addStudent("S101", "Priya");
+        addStudent("S103", "Rahul");
+        addStudent("S101", "Duplicate Priya");
+        
+        displayAll();
+        
+        System.out.println("\nSearching for S103:");
+        searchStudent("S103");
+        
+        System.out.println("\nRemoving S105:");
+        removeStudent("S105");
+        
+        displayAll();
+    }
+}
