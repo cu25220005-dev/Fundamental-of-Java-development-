@@ -1,0 +1,756 @@
+/* ==========================================================
+   COER UNIVERSITY - BCA III SEMESTER (2026-2027)
+   BCA201P: FOUNDATIONS OF JAVA DEVELOPMENT - LAB SHEET 11
+   Applets, AWT, Swing & Event Handling - All 10 Separate Standalone Programs
+   ========================================================== */
+
+
+
+// Q1. Student Registration Form - AWT
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class Lab11_Q01 extends Frame implements ActionListener {
+    TextField tfName, tfRoll, tfCourse;
+    Checkbox cbMale, cbFemale;
+    CheckboxGroup cbgGender;
+    Choice choiceSem;
+    Button btnSubmit, btnReset;
+    Label lblOutput;
+
+    public Lab11_Q01() {
+        setTitle("Student Registration Form - AWT");
+        setSize(400, 450);
+        setLayout(new FlowLayout());
+
+        add(new Label("Student Name:"));
+        tfName = new TextField(20);
+        add(tfName);
+
+        add(new Label("Roll Number:"));
+        tfRoll = new TextField(20);
+        add(tfRoll);
+
+        add(new Label("Course:"));
+        tfCourse = new TextField(20);
+        add(tfCourse);
+
+        add(new Label("Gender:"));
+        cbgGender = new CheckboxGroup();
+        cbMale = new Checkbox("Male", cbgGender, true);
+        cbFemale = new Checkbox("Female", cbgGender, false);
+        add(cbMale); add(cbFemale);
+
+        add(new Label("Semester:"));
+        choiceSem = new Choice();
+        choiceSem.add("Semester I");
+        choiceSem.add("Semester II");
+        choiceSem.add("Semester III");
+        choiceSem.add("Semester IV");
+        add(choiceSem);
+
+        btnSubmit = new Button("Submit");
+        btnReset = new Button("Reset");
+        add(btnSubmit); add(btnReset);
+
+        lblOutput = new Label("Status: Enter details and click Submit.");
+        add(lblOutput);
+
+        btnSubmit.addActionListener(this);
+        btnReset.addActionListener(this);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) { dispose(); }
+        });
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnSubmit) {
+            String name = tfName.getText();
+            String roll = tfRoll.getText();
+            String course = tfCourse.getText();
+            String gender = cbgGender.getSelectedCheckbox().getLabel();
+            String sem = choiceSem.getSelectedItem();
+            lblOutput.setText("Submitted: " + name + " | Roll: " + roll + " | Course: " + course + " | Gender: " + gender + " | " + sem);
+        } else if (e.getSource() == btnReset) {
+            tfName.setText("");
+            tfRoll.setText("");
+            tfCourse.setText("");
+            cbgGender.setSelectedCheckbox(cbMale);
+            choiceSem.select(0);
+            lblOutput.setText("Form cleared.");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q1: Student Registration Form AWT ---");
+        new Lab11_Q01().setVisible(true);
+    }
+}
+
+
+
+// Q2. Simple Calculator - AWT
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class Lab11_Q02 extends Frame implements ActionListener {
+    TextField tf1, tf2;
+    Button btnAdd, btnSub, btnMul, btnDiv;
+    Label lblResult;
+
+    public Lab11_Q02() {
+        setTitle("Simple Calculator - AWT");
+        setSize(300, 250);
+        setLayout(new FlowLayout());
+
+        add(new Label("Number 1:"));
+        tf1 = new TextField(15);
+        add(tf1);
+
+        add(new Label("Number 2:"));
+        tf2 = new TextField(15);
+        add(tf2);
+
+        btnAdd = new Button("+");
+        btnSub = new Button("-");
+        btnMul = new Button("*");
+        btnDiv = new Button("/");
+        add(btnAdd); add(btnSub); add(btnMul); add(btnDiv);
+
+        lblResult = new Label("Result: ");
+        add(lblResult);
+
+        btnAdd.addActionListener(this);
+        btnSub.addActionListener(this);
+        btnMul.addActionListener(this);
+        btnDiv.addActionListener(this);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) { dispose(); }
+        });
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try {
+            double n1 = Double.parseDouble(tf1.getText());
+            double n2 = Double.parseDouble(tf2.getText());
+            double res = 0;
+
+            if (e.getSource() == btnAdd) res = n1 + n2;
+            else if (e.getSource() == btnSub) res = n1 - n2;
+            else if (e.getSource() == btnMul) res = n1 * n2;
+            else if (e.getSource() == btnDiv) {
+                if (n2 == 0) {
+                    lblResult.setText("Error: Division by zero!");
+                    return;
+                }
+                res = n1 / n2;
+            }
+            lblResult.setText("Result: " + res);
+        } catch (NumberFormatException ex) {
+            lblResult.setText("Error: Enter valid numbers.");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q2: Simple Calculator AWT ---");
+        new Lab11_Q02().setVisible(true);
+    }
+}
+
+
+
+// Q3. Student Login Form - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Lab11_Q03 extends JFrame implements ActionListener {
+    JTextField tfUser;
+    JPasswordField pfPass;
+    JButton btnLogin, btnReset;
+
+    public Lab11_Q03() {
+        setTitle("Student Login Form - Swing");
+        setSize(350, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel lblUser = new JLabel("Username:");
+        lblUser.setBounds(30, 30, 80, 25);
+        add(lblUser);
+
+        tfUser = new JTextField();
+        tfUser.setBounds(120, 30, 160, 25);
+        add(tfUser);
+
+        JLabel lblPass = new JLabel("Password:");
+        lblPass.setBounds(30, 70, 80, 25);
+        add(lblPass);
+
+        pfPass = new JPasswordField();
+        pfPass.setBounds(120, 70, 160, 25);
+        add(pfPass);
+
+        btnLogin = new JButton("Login");
+        btnLogin.setBounds(50, 110, 90, 30);
+        add(btnLogin);
+
+        btnReset = new JButton("Reset");
+        btnReset.setBounds(170, 110, 90, 30);
+        add(btnReset);
+
+        btnLogin.addActionListener(this);
+        btnReset.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnLogin) {
+            String user = tfUser.getText();
+            String pass = new String(pfPass.getPassword());
+            if (user.equals("admin") && pass.equals("coer123")) {
+                JOptionPane.showMessageDialog(this, "Login Successful! Welcome " + user, "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (e.getSource() == btnReset) {
+            tfUser.setText("");
+            pfPass.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q3: Student Login Form Swing ---");
+        new Lab11_Q03().setVisible(true);
+    }
+}
+
+
+
+// Q4. Student Marksheet GUI - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Lab11_Q04 extends JFrame implements ActionListener {
+    JTextField tfEng, tfMath, tfJava, tfDbms, tfCn;
+    JButton btnCalculate;
+    JLabel lblOutput;
+
+    public Lab11_Q04() {
+        setTitle("Student Marksheet GUI - Swing");
+        setSize(350, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        int y = 20;
+        addLabel("English:", 30, y); tfEng = addTextField(140, y); y += 40;
+        addLabel("Mathematics:", 30, y); tfMath = addTextField(140, y); y += 40;
+        addLabel("Java:", 30, y); tfJava = addTextField(140, y); y += 40;
+        addLabel("DBMS:", 30, y); tfDbms = addTextField(140, y); y += 40;
+        addLabel("Comp Networks:", 30, y); tfCn = addTextField(140, y); y += 50;
+
+        btnCalculate = new JButton("Calculate Result");
+        btnCalculate.setBounds(90, y, 150, 30);
+        add(btnCalculate);
+        y += 45;
+
+        lblOutput = new JLabel("Enter marks to view result.");
+        lblOutput.setBounds(30, y, 280, 50);
+        add(lblOutput);
+
+        btnCalculate.addActionListener(this);
+    }
+
+    private void addLabel(String text, int x, int y) {
+        JLabel l = new JLabel(text);
+        l.setBounds(x, y, 100, 25);
+        add(l);
+    }
+
+    private JTextField addTextField(int x, int y) {
+        JTextField tf = new JTextField();
+        tf.setBounds(x, y, 150, 25);
+        add(tf);
+        return tf;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try {
+            double e1 = Double.parseDouble(tfEng.getText());
+            double m1 = Double.parseDouble(tfMath.getText());
+            double j1 = Double.parseDouble(tfJava.getText());
+            double d1 = Double.parseDouble(tfDbms.getText());
+            double c1 = Double.parseDouble(tfCn.getText());
+
+            double total = e1 + m1 + j1 + d1 + c1;
+            double percentage = total / 5.0;
+            String status = (e1 >= 40 && m1 >= 40 && j1 >= 40 && d1 >= 40 && c1 >= 40) ? "PASS" : "FAIL";
+            char grade = percentage >= 85 ? 'A' : percentage >= 70 ? 'B' : percentage >= 50 ? 'C' : percentage >= 40 ? 'D' : 'F';
+
+            lblOutput.<html>Total: " + total + "/500 | Percentage: " + percentage + "%<br>Grade: " + grade + " | Status: " + status + "</html>");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter valid numeric marks.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q4: Student Marksheet GUI Swing ---");
+        new Lab11_Q04().setVisible(true);
+    }
+}
+
+
+
+// Q5. Course Selection Form - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Lab11_Q05 extends JFrame implements ActionListener {
+    JTextField tfName;
+    JComboBox<String> cbCourse;
+    JRadioButton rbMale, rbFemale;
+    ButtonGroup bgGender;
+    JCheckBox chkJava, chkPython, chkWeb;
+    JButton btnSubmit, btnReset;
+
+    public Lab11_Q05() {
+        setTitle("Course Selection Form - Swing");
+        setSize(400, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel l1 = new JLabel("Student Name:"); l1.setBounds(30, 20, 100, 25); add(l1);
+        tfName = new JTextField(); tfName.setBounds(140, 20, 180, 25); add(tfName);
+
+        JLabel l2 = new JLabel("Course:"); l2.setBounds(30, 60, 100, 25); add(l2);
+        cbCourse = new JComboBox<>(new String[]{"BCA", "B.Tech", "MCA", "B.Sc"});
+        cbCourse.setBounds(140, 60, 180, 25); add(cbCourse);
+
+        JLabel l3 = new JLabel("Gender:"); l3.setBounds(30, 100, 100, 25); add(l3);
+        rbMale = new JRadioButton("Male", true); rbMale.setBounds(140, 100, 70, 25); add(rbMale);
+        rbFemale = new JRadioButton("Female"); rbFemale.setBounds(220, 100, 90, 25); add(rbFemale);
+        bgGender = new ButtonGroup(); bgGender.add(rbMale); bgGender.add(rbFemale);
+
+        JLabel l4 = new JLabel("Subjects:"); l4.setBounds(30, 140, 100, 25); add(l4);
+        chkJava = new JCheckBox("Java"); chkJava.setBounds(140, 140, 60, 25); add(chkJava);
+        chkPython = new JCheckBox("Python"); chkPython.setBounds(210, 140, 70, 25); add(chkPython);
+        chkWeb = new JCheckBox("Web Dev"); chkWeb.setBounds(280, 140, 90, 25); add(chkWeb);
+
+        btnSubmit = new JButton("Submit"); btnSubmit.setBounds(90, 200, 90, 30); add(btnSubmit);
+        btnReset = new JButton("Reset"); btnReset.setBounds(200, 200, 90, 30); add(btnReset);
+
+        btnSubmit.addActionListener(this);
+        btnReset.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnSubmit) {
+            String name = tfName.getText();
+            String course = (String) cbCourse.getSelectedItem();
+            String gender = rbMale.isSelected() ? "Male" : "Female";
+            String subs = "";
+            if (chkJava.isSelected()) subs += "Java ";
+            if (chkPython.isSelected()) subs += "Python ";
+            if (chkWeb.isSelected()) subs += "Web Dev ";
+
+            JOptionPane.showMessageDialog(this, "Name: " + name + "
+Course: " + course + "
+Gender: " + gender + "
+Subjects: " + subs, "Selected Details", JOptionPane.INFORMATION_MESSAGE);
+        } else if (e.getSource() == btnReset) {
+            tfName.setText("");
+            cbCourse.setSelectedIndex(0);
+            rbMale.setSelected(true);
+            chkJava.setSelected(false);
+            chkPython.setSelected(false);
+            chkWeb.setSelected(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q4: Course Selection Form Swing ---");
+        new Lab11_Q05().setVisible(true);
+    }
+}
+
+
+
+// Q6. Employee Registration Form - AWT
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class Lab11_Q06 extends Frame implements ActionListener {
+    TextField tfId, tfName, tfDesig, tfSal;
+    Choice choiceDept;
+    CheckboxGroup cbgGen;
+    Checkbox cbM, cbF;
+    Button btnSubmit, btnClear;
+    TextArea taOutput;
+
+    public Lab11_Q06() {
+        setTitle("Employee Registration Form - AWT");
+        setSize(450, 500);
+        setLayout(new FlowLayout());
+
+        add(new Label("Emp ID:")); tfId = new TextField(25); add(tfId);
+        add(new Label("Name:")); tfName = new TextField(25); add(tfName);
+        add(new Label("Designation:")); tfDesig = new TextField(25); add(tfDesig);
+        add(new Label("Salary:")); tfSal = new TextField(25); add(tfSal);
+
+        add(new Label("Department:"));
+        choiceDept = new Choice();
+        choiceDept.add("HR"); choiceDept.add("IT"); choiceDept.add("Finance"); choiceDept.add("Sales");
+        add(choiceDept);
+
+        add(new Label("Gender:"));
+        cbgGen = new CheckboxGroup();
+        cbM = new Checkbox("Male", cbgGen, true);
+        cbF = new Checkbox("Female", cbgGen, false);
+        add(cbM); add(cbF);
+
+        btnSubmit = new Button("Submit"); btnClear = new Button("Clear");
+        add(btnSubmit); add(btnClear);
+
+        taOutput = new TextArea(8, 40);
+        add(taOutput);
+
+        btnSubmit.addActionListener(this);
+        btnClear.addActionListener(this);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) { dispose(); }
+        });
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnSubmit) {
+            String info = "ID: " + tfId.getText() + ", Name: " + tfName.getText() + 
+                          ", Dept: " + choiceDept.getSelectedItem() + ", Desig: " + tfDesig.getText() + 
+                          ", Salary: ₹" + tfSal.getText() + ", Gender: " + cbgGen.getSelectedCheckbox().getLabel() + "
+";
+            taOutput.append(info);
+        } else if (e.getSource() == btnClear) {
+            tfId.setText(""); tfName.setText(""); tfDesig.setText(""); tfSal.setText("");
+            cbgGen.setSelectedCheckbox(cbM); choiceDept.select(0); taOutput.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q6: Employee Registration AWT ---");
+        new Lab11_Q06().setVisible(true);
+    }
+}
+
+
+
+// Q7. Temperature Converter - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Lab11_Q07 extends JFrame implements ActionListener {
+    JTextField tfTemp;
+    JRadioButton rbC2F, rbF2C;
+    ButtonGroup bg;
+    JButton btnConvert, btnClear;
+    JLabel lblResult;
+
+    public Lab11_Q07() {
+        setTitle("Temperature Converter - Swing");
+        setSize(350, 250);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel l1 = new JLabel("Temperature:"); l1.setBounds(30, 20, 90, 25); add(l1);
+        tfTemp = new JTextField(); tfTemp.setBounds(130, 20, 160, 25); add(tfTemp);
+
+        rbC2F = new JRadioButton("Celsius to Fahrenheit", true); rbC2F.setBounds(30, 60, 160, 25); add(rbC2F);
+        rbF2C = new JRadioButton("Fahrenheit to Celsius"); rbF2C.setBounds(30, 90, 160, 25); add(rbF2C);
+        bg = new ButtonGroup(); bg.add(rbC2F); bg.add(rbF2C);
+
+        btnConvert = new JButton("Convert"); btnConvert.setBounds(50, 130, 90, 30); add(btnConvert);
+        btnClear = new JButton("Clear"); btnClear.setBounds(170, 130, 90, 30); add(btnClear);
+
+        lblResult = new JLabel("Result: "); lblResult.setBounds(30, 175, 280, 25); add(lblResult);
+
+        btnConvert.addActionListener(this);
+        btnClear.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnConvert) {
+            try {
+                double val = Double.parseDouble(tfTemp.getText());
+                if (rbC2F.isSelected()) {
+                    double f = (val * 9.0 / 5.0) + 32;
+                    lblResult.setText("Result: " + val + " °C = " + f + " °F");
+                } else {
+                    double c = (val - 32) * 5.0 / 9.0;
+                    lblResult.setText("Result: " + val + " °F = " + c + " °C");
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric temperature.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (e.getSource() == btnClear) {
+            tfTemp.setText("");
+            rbC2F.setSelected(true);
+            lblResult.setText("Result: ");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q7: Temperature Converter Swing ---");
+        new Lab11_Q07().setVisible(true);
+    }
+}
+
+
+
+// Q8. Simple Notepad - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class Lab11_Q08 extends JFrame implements ActionListener {
+    JTextArea textArea;
+    JMenuBar menuBar;
+    JMenu fileMenu;
+    JMenuItem itemNew, itemOpen, itemSave, itemExit;
+    JFileChooser fileChooser;
+
+    public Lab11_Q08() {
+        setTitle("Simple Notepad - Swing");
+        setSize(500, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        textArea = new JTextArea();
+        add(new JScrollPane(textArea), "Center");
+
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu("File");
+
+        itemNew = new JMenuItem("New");
+        itemOpen = new JMenuItem("Open");
+        itemSave = new JMenuItem("Save");
+        itemExit = new JMenuItem("Exit");
+
+        fileMenu.add(itemNew); fileMenu.add(itemOpen); fileMenu.add(itemSave); fileMenu.addSeparator(); fileMenu.add(itemExit);
+        menuBar.add(fileMenu);
+        setJMenuBar(menuBar);
+
+        itemNew.addActionListener(this);
+        itemOpen.addActionListener(this);
+        itemSave.addActionListener(this);
+        itemExit.addActionListener(this);
+
+        fileChooser = new JFileChooser();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == itemNew) {
+            textArea.setText("");
+        } else if (e.getSource() == itemOpen) {
+            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                    textArea.read(br, null);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error opening file.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else if (e.getSource() == itemSave) {
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                    textArea.write(bw);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error saving file.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else if (e.getSource() == itemExit) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q8: Simple Notepad Swing ---");
+        new Lab11_Q08().setVisible(true);
+    }
+}
+
+
+
+// Q9. Student Feedback Form - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Lab11_Q09 extends JFrame implements ActionListener {
+    JTextField tfName, tfRoll, tfCourse;
+    JRadioButton rbExc, rbVGood, rbGood, rbAvg, rbPoor;
+    ButtonGroup bgRating;
+    JCheckBox chkTeach, chkLab, chkMat, chkAsg;
+    JTextArea taComments;
+    JButton btnSubmit, btnReset;
+
+    public Lab11_Q09() {
+        setTitle("Student Feedback Form - Swing");
+        setSize(450, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        int y = 20;
+        JLabel l1 = new JLabel("Name:"); l1.setBounds(30, y, 80, 25); add(l1);
+        tfName = new JTextField(); tfName.setBounds(120, y, 250, 25); add(tfName); y += 40;
+
+        JLabel l2 = new JLabel("Roll No:"); l2.setBounds(30, y, 80, 25); add(l2);
+        tfRoll = new JTextField(); tfRoll.setBounds(120, y, 250, 25); add(tfRoll); y += 40;
+
+        JLabel l3 = new JLabel("Course:"); l3.setBounds(30, y, 80, 25); add(l3);
+        tfCourse = new JTextField(); tfCourse.setBounds(120, y, 250, 25); add(tfCourse); y += 45;
+
+        JLabel l4 = new JLabel("Rating:"); l4.setBounds(30, y, 80, 25); add(l4);
+        rbExc = new JRadioButton("Excellent", true); rbExc.setBounds(120, y, 90, 25); add(rbExc);
+        rbVGood = new JRadioButton("Very Good"); rbVGood.setBounds(220, y, 100, 25); add(rbVGood); y += 30;
+        rbGood = new JRadioButton("Good"); rbGood.setBounds(120, y, 70, 25); add(rbGood);
+        rbAvg = new JRadioButton("Average"); rbAvg.setBounds(200, y, 80, 25); add(rbAvg);
+        rbPoor = new JRadioButton("Poor"); rbPoor.setBounds(290, y, 70, 25); add(rbPoor);
+        bgRating = new ButtonGroup(); bgRating.add(rbExc); bgRating.add(rbVGood); bgRating.add(rbGood); bgRating.add(rbAvg); bgRating.add(rbPoor);
+        y += 45;
+
+        JLabel l5 = new JLabel("Feedback:"); l5.setBounds(30, y, 80, 25); add(l5);
+        chkTeach = new JCheckBox("Teaching"); chkTeach.setBounds(120, y, 90, 25); add(chkTeach);
+        chkLab = new JCheckBox("Laboratory"); chkLab.setBounds(220, y, 100, 25); add(l5); chkLab.setBounds(220, y, 100, 25); add(chkLab); y += 35;
+        chkMat = new JCheckBox("Course Material"); chkMat.setBounds(120, y, 120, 25); add(chkMat);
+        chkAsg = new JCheckBox("Assignments"); chkAsg.setBounds(250, y, 110, 25); add(chkAsg); y += 45;
+
+        JLabel l6 = new JLabel("Comments:"); l6.setBounds(30, y, 80, 25); add(l6);
+        taComments = new JTextArea(); taComments.setBounds(120, y, 250, 60); add(taComments); y += 80;
+
+        btnSubmit = new JButton("Submit"); btnSubmit.setBounds(120, y, 100, 30); add(btnSubmit);
+        btnReset = new JButton("Reset"); btnReset.setBounds(240, y, 100, 30); add(btnReset);
+
+        btnSubmit.addActionListener(this);
+        btnReset.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnSubmit) {
+            String rating = rbExc.isSelected() ? "Excellent" : rbVGood.isSelected() ? "Very Good" : rbGood.isSelected() ? "Good" : rbAvg.isSelected() ? "Average" : "Poor";
+            String areas = "";
+            if (chkTeach.isSelected()) areas += "Teaching ";
+            if (chkLab.isSelected()) areas += "Laboratory ";
+            if (chkMat.isSelected()) areas += "Course Material ";
+            if (chkAsg.isSelected()) areas += "Assignments ";
+
+            JOptionPane.showMessageDialog(this, "Feedback Submitted:
+Name: " + tfName.getText() + "
+Roll: " + tfRoll.getText() + "
+Rating: " + rating + "
+Liked: " + areas + "
+Comments: " + taComments.getText(), "Thank You", JOptionPane.INFORMATION_MESSAGE);
+        } else if (e.getSource() == btnReset) {
+            tfName.setText(""); tfRoll.setText(""); tfCourse.setText("");
+            rbExc.setSelected(true);
+            chkTeach.setSelected(false); chkLab.setSelected(false); chkMat.setSelected(false); chkAsg.setSelected(false);
+            taComments.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q9: Student Feedback Form Swing ---");
+        new Lab11_Q09().setVisible(true);
+    }
+}
+
+
+
+// Q10. Mini Banking GUI Application - Swing
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Lab11_Q10 extends JFrame implements ActionListener {
+    JTextField tfAccNo, tfName, tfBalance, tfAmount;
+    JButton btnDeposit, btnWithdraw, btnCheck, btnClear;
+    double balance = 5000.0; // initial default balance
+
+    public Lab11_Q10() {
+        setTitle("Mini Banking GUI Application - Swing");
+        setSize(400, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel l1 = new JLabel("Account Number:"); l1.setBounds(30, 25, 120, 25); add(l1);
+        tfAccNo = new JTextField("ACC1001"); tfAccNo.setBounds(160, 25, 180, 25); add(tfAccNo);
+
+        JLabel l2 = new JLabel("Customer Name:"); l2.setBounds(30, 65, 120, 25); add(l2);
+        tfName = new JTextField("Salik"); tfName.setBounds(160, 65, 180, 25); add(tfName);
+
+        JLabel l3 = new JLabel("Current Balance:"); l3.setBounds(30, 105, 120, 25); add(l3);
+        tfBalance = new JTextField(String.valueOf(balance)); tfBalance.setBounds(160, 105, 180, 25); tfBalance.setEditable(false); add(tfBalance);
+
+        JLabel l4 = new JLabel("Amount:"); l4.setBounds(30, 145, 120, 25); add(l4);
+        tfAmount = new JTextField(); tfAmount.setBounds(160, 145, 180, 25); add(tfAmount);
+
+        btnDeposit = new JButton("Deposit"); btnDeposit.setBounds(40, 200, 95, 30); add(btnDeposit);
+        btnWithdraw = new JButton("Withdraw"); btnWithdraw.setBounds(145, 200, 95, 30); add(btnWithdraw);
+        btnCheck = new JButton("Check Bal"); btnCheck.setBounds(250, 200, 95, 30); add(btnCheck);
+
+        btnClear = new JButton("Clear"); btnClear.setBounds(145, 245, 95, 30); add(btnClear);
+
+        btnDeposit.addActionListener(this);
+        btnWithdraw.addActionListener(this);
+        btnCheck.addActionListener(this);
+        btnClear.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try {
+            if (e.getSource() == btnCheck) {
+                JOptionPane.showMessageDialog(this, "Current Balance: ₹" + balance, "Balance Inquiry", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            if (e.getSource() == btnClear) {
+                tfAmount.setText("");
+                return;
+            }
+
+            double amt = Double.parseDouble(tfAmount.getText());
+            if (amt <= 0) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid positive amount.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (e.getSource() == btnDeposit) {
+                balance += amt;
+                tfBalance.setText(String.valueOf(balance));
+                JOptionPane.showMessageDialog(this, "Successfully Deposited ₹" + amt + "
+New Balance: ₹" + balance, "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else if (e.getSource() == btnWithdraw) {
+                if (amt <= balance) {
+                    balance -= amt;
+                    tfBalance.setText(String.valueOf(balance));
+                    JOptionPane.showMessageDialog(this, "Successfully Withdrawn ₹" + amt + "
+Remaining Balance: ₹" + balance, "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Insufficient Balance! Current Balance is ₹" + balance, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric amount.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- Q10: Mini Banking GUI Application Swing ---");
+        new Lab11_Q10().setVisible(true);
+    }
+}
