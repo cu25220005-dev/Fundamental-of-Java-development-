@@ -1,0 +1,771 @@
+/* ==========================================================
+   COER UNIVERSITY - BCA III SEMESTER (2026-2027)
+   BCA201P: FOUNDATIONS OF JAVA DEVELOPMENT - LAB SHEET 07
+   OOP (Encapsulation, Inheritance, Overriding, Interfaces)
+   All 20 Separate Standalone Programs (Clean Spacing Version)
+   ========================================================== */
+
+
+
+// Q1. Student Encapsulation
+
+import java.util.Scanner;
+
+class StudentEncapsulated {
+    private String name;
+    private int rollNo;
+    private double marks;
+
+    public void setName(String name) { this.name = name; }
+    public String getName() { return name; }
+
+    public void setRollNo(int rollNo) { this.rollNo = rollNo; }
+    public int getRollNo() { return rollNo; }
+
+    public void setMarks(double marks) { this.marks = marks; }
+    public double getMarks() { return marks; }
+
+    public void displayDetails() {
+        System.out.println("Student Details -> Name: " + getName() + ", Roll No: " + getRollNo() + ", Marks: " + getMarks());
+    }
+}
+
+public class Lab07_Q01 {
+    public static void main(String[] args) {
+        System.out.println("--- Q1: Student Encapsulation ---");
+        StudentEncapsulated s = new StudentEncapsulated();
+        s.setName("Salik");
+        s.setRollNo(101);
+        s.setMarks(88.5);
+        s.displayDetails();
+    }
+}
+
+
+
+// Q2. Bank Account with Validation
+
+import java.util.Scanner;
+
+class BankAccountEncapsulated {
+    private String accountNumber;
+    private String accountHolder;
+    private double balance;
+
+    public void setAccountNumber(String accNo) { this.accountNumber = accNo; }
+    public String getAccountNumber() { return accountNumber; }
+
+    public void setAccountHolder(String holder) { this.accountHolder = holder; }
+    public String getAccountHolder() { return accountHolder; }
+
+    public double getBalance() { return balance; }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited ₹" + amount + ". New Balance: ₹" + balance);
+        } else {
+            System.out.println("Invalid deposit amount! Must be greater than 0.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn ₹" + amount + ". Remaining Balance: ₹" + balance);
+        } else {
+            System.out.println("Invalid withdrawal! Amount exceeds balance or is invalid.");
+        }
+    }
+}
+
+public class Lab07_Q02 {
+    public static void main(String[] args) {
+        System.out.println("--- Q2: Bank Account with Validation ---");
+        BankAccountEncapsulated acc = new BankAccountEncapsulated();
+        acc.setAccountNumber("ACC123");
+        acc.setAccountHolder("Aarav");
+        acc.deposit(5000);
+        acc.withdraw(2000);
+        acc.withdraw(4000);
+    }
+}
+
+
+
+// Q3. Employee Salary Encapsulation with Validation
+
+import java.util.Scanner;
+
+class EmployeeSalary {
+    private int employeeId;
+    private String employeeName;
+    private double salary;
+
+    public void setEmployeeId(int id) { this.employeeId = id; }
+    public int getEmployeeId() { return employeeId; }
+
+    public void setEmployeeName(String name) { this.employeeName = name; }
+    public String getEmployeeName() { return employeeName; }
+
+    public void setSalary(double salary) {
+        if (salary >= 0 && salary <= 1000000) {
+            this.salary = salary;
+            System.out.println("Salary set successfully: ₹" + salary);
+        } else {
+            System.out.println("Invalid salary (" + salary + ")! Must be between 0 and 1,000,000.");
+        }
+    }
+    public double getSalary() { return salary; }
+
+    public void display() {
+        System.out.println("Emp ID: " + employeeId + ", Name: " + employeeName + ", Salary: ₹" + salary);
+    }
+}
+
+public class Lab07_Q03 {
+    public static void main(String[] args) {
+        System.out.println("--- Q3: Employee Salary Encapsulation ---");
+        EmployeeSalary emp = new EmployeeSalary();
+        emp.setEmployeeId(201);
+        emp.setEmployeeName("Priya");
+        emp.setSalary(750000);
+        emp.setSalary(1500000);
+        emp.display();
+    }
+}
+
+
+
+// Q4. Animal -> Dog (Single Inheritance)
+
+import java.util.Scanner;
+
+class AnimalQ4 {
+    void eat() { System.out.println("Animal is eating..."); }
+    void sleep() { System.out.println("Animal is sleeping..."); }
+}
+
+class DogQ4 extends AnimalQ4 {
+    void bark() { System.out.println("Dog is barking..."); }
+}
+
+public class Lab07_Q04 {
+    public static void main(String[] args) {
+        System.out.println("--- Q4: Animal -> Dog (Single Inheritance) ---");
+        DogQ4 dog = new DogQ4();
+        dog.eat();
+        dog.sleep();
+        dog.bark();
+    }
+}
+
+
+
+// Q5. Person -> Student
+
+import java.util.Scanner;
+
+class PersonQ5 {
+    String name;
+    int age;
+
+    void displayPerson() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+}
+
+class StudentQ5 extends PersonQ5 {
+    int rollNo;
+    String course;
+
+    void displayStudent() {
+        displayPerson();
+        System.out.println("Roll No: " + rollNo + ", Course: " + course);
+    }
+}
+
+public class Lab07_Q05 {
+    public static void main(String[] args) {
+        System.out.println("--- Q5: Person -> Student ---");
+        StudentQ5 s = new StudentQ5();
+        s.name = "Rahul";
+        s.age = 20;
+        s.rollNo = 105;
+        s.course = "BCA";
+        s.displayStudent();
+    }
+}
+
+
+
+// Q6. Employee -> Manager with Encapsulation
+
+import java.util.Scanner;
+
+class EmployeeQ6 {
+    private String name;
+    private double salary;
+
+    public void setName(String name) { this.name = name; }
+    public String getName() { return name; }
+
+    public void setSalary(double salary) { this.salary = salary; }
+    public double getSalary() { return salary; }
+}
+
+class ManagerQ6 extends EmployeeQ6 {
+    String department;
+
+    void displayManager() {
+        System.out.println("Manager Name: " + getName() + ", Salary: ₹" + getSalary() + ", Department: " + department);
+    }
+}
+
+public class Lab07_Q06 {
+    public static void main(String[] args) {
+        System.out.println("--- Q6: Employee -> Manager (Encapsulation + Inheritance) ---");
+        ManagerQ6 m = new ManagerQ6();
+        m.setName("Amit");
+        m.setSalary(95000);
+        m.department = "IT";
+        m.displayManager();
+    }
+}
+
+
+
+// Q7. Animal -> Dog -> Puppy (Multilevel Inheritance)
+
+import java.util.Scanner;
+
+class AnimalQ7 {
+    void eat() { System.out.println("Animal eats."); }
+}
+
+class DogQ7 extends AnimalQ7 {
+    void bark() { System.out.println("Dog barks."); }
+}
+
+class Puppy extends DogQ7 {
+    void play() { System.out.println("Puppy plays."); }
+}
+
+public class Lab07_Q07 {
+    public static void main(String[] args) {
+        System.out.println("--- Q7: Animal -> Dog -> Puppy ---");
+        Puppy p = new Puppy();
+        p.eat();
+        p.bark();
+        p.play();
+    }
+}
+
+
+
+// Q8. Person -> Employee -> Manager (Multilevel Inheritance)
+
+import java.util.Scanner;
+
+class PersonQ8 {
+    String name;
+    void displayName() { System.out.println("Person Name: " + name); }
+}
+
+class EmployeeQ8 extends PersonQ8 {
+    int employeeId;
+    void displayEmployee() {
+        displayName();
+        System.out.println("Employee ID: " + employeeId);
+    }
+}
+
+class ManagerQ8 extends EmployeeQ8 {
+    String department;
+    void displayManager() {
+        displayEmployee();
+        System.out.println("Department: " + department);
+    }
+}
+
+public class Lab07_Q08 {
+    public static void main(String[] args) {
+        System.out.println("--- Q8: Person -> Employee -> Manager ---");
+        ManagerQ8 m = new ManagerQ8();
+        m.name = "Neha";
+        m.employeeId = 501;
+        m.department = "HR";
+        m.displayManager();
+    }
+}
+
+
+
+// Q9. Vehicle -> Car -> ElectricCar (Multilevel Inheritance)
+
+import java.util.Scanner;
+
+class Vehicle {
+    void start() { System.out.println("Vehicle started."); }
+    void stop() { System.out.println("Vehicle stopped."); }
+}
+
+class CarQ9 extends Vehicle {
+    void drive() { System.out.println("Car is driving."); }
+}
+
+class ElectricCar extends CarQ9 {
+    void chargeBattery() { System.out.println("Electric car battery charging."); }
+}
+
+public class Lab07_Q09 {
+    public static void main(String[] args) {
+        System.out.println("--- Q9: Vehicle -> Car -> ElectricCar ---");
+        ElectricCar ec = new ElectricCar();
+        ec.start();
+        ec.drive();
+        ec.chargeBattery();
+        ec.stop();
+    }
+}
+
+
+
+// Q10. Animal -> Dog and Cat (Hierarchical Inheritance)
+
+import java.util.Scanner;
+
+class AnimalQ10 {
+    void eat() { System.out.println("This animal is eating."); }
+}
+
+class DogQ10 extends AnimalQ10 {
+    void bark() { System.out.println("Dog says: Woof Woof!"); }
+}
+
+class CatQ10 extends AnimalQ10 {
+    void meow() { System.out.println("Cat says: Meow Meow!"); }
+}
+
+public class Lab07_Q10 {
+    public static void main(String[] args) {
+        System.out.println("--- Q10: Animal -> Dog and Cat ---");
+        DogQ10 d = new DogQ10();
+        CatQ10 c = new CatQ10();
+        d.eat(); d.bark();
+        c.eat(); c.meow();
+    }
+}
+
+
+
+// Q11. Person -> Student and Teacher (Hierarchical Inheritance)
+
+import java.util.Scanner;
+
+class PersonQ11 {
+    String name;
+    void displayName() { System.out.println("Name: " + name); }
+}
+
+class StudentQ11 extends PersonQ11 {
+    String course;
+    void study() { System.out.println(name + " is studying " + course); }
+}
+
+class Teacher extends PersonQ11 {
+    String subject;
+    void teach() { System.out.println(name + " is teaching " + subject); }
+}
+
+public class Lab07_Q11 {
+    public static void main(String[] args) {
+        System.out.println("--- Q11: Person -> Student and Teacher ---");
+        StudentQ11 s = new StudentQ11();
+        s.name = "Karan";
+        s.course = "BCA";
+        s.displayName(); s.study();
+
+        Teacher t = new Teacher();
+        t.name = "Dr. Gupta";
+        t.subject = "Java Programming";
+        t.displayName(); t.teach();
+    }
+}
+
+
+
+// Q12. Employee -> Developer and Manager (Hierarchical Inheritance)
+
+import java.util.Scanner;
+
+class EmployeeQ12 {
+    String employeeName;
+    int employeeId;
+    void displayEmployee() { System.out.println("ID: " + employeeId + ", Name: " + employeeName); }
+}
+
+class Developer extends EmployeeQ12 {
+    String programmingLanguage;
+    void writeCode() { System.out.println(employeeName + " is writing code in " + programmingLanguage); }
+}
+
+class ManagerQ12 extends EmployeeQ12 {
+    String department;
+    void conductMeeting() { System.out.println(employeeName + " is conducting meeting for " + department); }
+}
+
+public class Lab07_Q12 {
+    public static void main(String[] args) {
+        System.out.println("--- Q12: Employee -> Developer and Manager ---");
+        Developer dev = new Developer();
+        dev.employeeId = 301; dev.employeeName = "Aman"; dev.programmingLanguage = "Java";
+        dev.displayEmployee(); dev.writeCode();
+
+        ManagerQ12 mgr = new ManagerQ12();
+        mgr.employeeId = 302; mgr.employeeName = "Ritu"; mgr.department = "Finance";
+        mgr.displayEmployee(); mgr.conductMeeting();
+    }
+}
+
+
+
+// Q13. Animal Sound Overriding
+
+import java.util.Scanner;
+
+class AnimalQ13 {
+    void makeSound() { System.out.println("Animal makes a sound."); }
+}
+
+class DogQ13 extends AnimalQ13 {
+    @Override
+    void makeSound() { System.out.println("Dog barks: Bark! Bark!"); }
+}
+
+class CatQ13 extends AnimalQ13 {
+    @Override
+    void makeSound() { System.out.println("Cat meows: Meow! Meow!"); }
+}
+
+public class Lab07_Q13 {
+    public static void main(String[] args) {
+        System.out.println("--- Q13: Animal Sound Overriding ---");
+        AnimalQ13 a = new AnimalQ13(); a.makeSound();
+        AnimalQ13 d = new DogQ13(); d.makeSound();
+        AnimalQ13 c = new CatQ13(); c.makeSound();
+    }
+}
+
+
+
+// Q14. Employee Salary Calculation Overriding
+
+import java.util.Scanner;
+
+class EmployeeQ14 {
+    void calculateSalary() { System.out.println("Base Employee Salary calculation: ₹50,000"); }
+}
+
+class ManagerQ14 extends EmployeeQ14 {
+    @Override
+    void calculateSalary() { System.out.println("Manager Salary calculation (with allowances): ₹1,20,000"); }
+}
+
+public class Lab07_Q14 {
+    public static void main(String[] args) {
+        System.out.println("--- Q14: Employee Salary Calculation Overriding ---");
+        EmployeeQ14 emp = new EmployeeQ14(); emp.calculateSalary();
+        EmployeeQ14 mgr = new ManagerQ14(); mgr.calculateSalary();
+    }
+}
+
+
+
+// Q15. Shape Area Overriding
+
+import java.util.Scanner;
+
+class Shape {
+    void calculateArea() { System.out.println("Area calculation not defined for generic shape."); }
+}
+
+class CircleQ15 extends Shape {
+    double radius = 7.0;
+    @Override
+    void calculateArea() {
+        double area = Math.PI * radius * radius;
+        System.out.println("Circle Area (r=7): " + area);
+    }
+}
+
+class RectangleQ15 extends Shape {
+    double length = 10.0, breadth = 5.0;
+    @Override
+    void calculateArea() {
+        double area = length * breadth;
+        System.out.println("Rectangle Area (10x5): " + area);
+    }
+}
+
+public class Lab07_Q15 {
+    public static void main(String[] args) {
+        System.out.println("--- Q15: Shape Area Overriding ---");
+        Shape c = new CircleQ15(); c.calculateArea();
+        Shape r = new RectangleQ15(); r.calculateArea();
+    }
+}
+
+
+
+// Q16. Camera + MusicPlayer -> Smartphone (Multiple Inheritance via Interfaces)
+
+import java.util.Scanner;
+
+interface Camera {
+    void takePhoto();
+}
+
+interface MusicPlayer {
+    void playMusic();
+}
+
+class Smartphone implements Camera, MusicPlayer {
+    @Override
+    public void takePhoto() { System.out.println("Smartphone is taking a photo."); }
+
+    @Override
+    public void playMusic() { System.out.println("Smartphone is playing music."); }
+}
+
+public class Lab07_Q16 {
+    public static void main(String[] args) {
+        System.out.println("--- Q16: Multiple Inheritance via Interfaces ---");
+        Smartphone phone = new Smartphone();
+        phone.takePhoto();
+        phone.playMusic();
+    }
+}
+
+
+
+// Q17. Printer + Scanner -> MultiFunctionMachine
+
+import java.util.Scanner;
+
+interface Printer {
+    void print();
+}
+
+interface ScannerDev {
+    void scan();
+}
+
+class MultiFunctionMachine implements Printer, ScannerDev {
+    private String machineName;
+    private String machineId;
+
+    public void setMachineName(String name) { this.machineName = name; }
+    public String getMachineName() { return machineName; }
+
+    public void setMachineId(String id) { this.machineId = id; }
+    public String getMachineId() { return machineId; }
+
+    @Override
+    public void print() { System.out.println(machineName + " (" + machineId + ") is printing document."); }
+
+    @Override
+    public void scan() { System.out.println(machineName + " (" + machineId + ") is scanning document."); }
+}
+
+public class Lab07_Q17 {
+    public static void main(String[] args) {
+        System.out.println("--- Q17: MultiFunction Machine (Interfaces + Encapsulation) ---");
+        MultiFunctionMachine mfm = new MultiFunctionMachine();
+        mfm.setMachineName("HP LaserJet Pro");
+        mfm.setMachineId("MFM-909");
+        mfm.print();
+        mfm.scan();
+    }
+}
+
+
+
+// Q18. Vehicle -> Car -> ElectricCar + Electric (Hybrid Inheritance)
+
+import java.util.Scanner;
+
+class VehicleQ18 {
+    void start() { System.out.println("Vehicle started."); }
+}
+
+class CarQ18 extends VehicleQ18 {
+    void drive() { System.out.println("Car is driving smoothly."); }
+}
+
+interface Electric {
+    void chargeBattery();
+}
+
+class ElectricCarQ18 extends CarQ18 implements Electric {
+    @Override
+    public void chargeBattery() { System.out.println("ElectricCar battery is charging."); }
+}
+
+public class Lab07_Q18 {
+    public static void main(String[] args) {
+        System.out.println("--- Q18: Hybrid Inheritance Structure ---");
+        ElectricCarQ18 ec = new ElectricCarQ18();
+        ec.start();
+        ec.drive();
+        ec.chargeBattery();
+    }
+}
+
+
+
+// Q19. Employee -> Developer + Programmer + Researcher (Hybrid Structure)
+
+import java.util.Scanner;
+
+class EmployeeQ19 {
+    private String name;
+    private int employeeId;
+
+    public void setName(String name) { this.name = name; }
+    public String getName() { return name; }
+
+    public void setEmployeeId(int id) { this.employeeId = id; }
+    public int getEmployeeId() { return employeeId; }
+
+    void displayEmployee() {
+        System.out.println("Emp ID: " + employeeId + ", Name: " + name);
+    }
+}
+
+interface Programmer { void writeCode(); }
+interface Researcher { void conductResearch(); }
+
+class DeveloperQ19 extends EmployeeQ19 implements Programmer, Researcher {
+    @Override
+    public void writeCode() { System.out.println(getName() + " is writing advanced software code."); }
+
+    @Override
+    public void conductResearch() { System.out.println(getName() + " is conducting R&D on AI algorithms."); }
+}
+
+public class Lab07_Q19 {
+    public static void main(String[] args) {
+        System.out.println("--- Q19: Developer with Multiple Interfaces ---");
+        DeveloperQ19 dev = new DeveloperQ19();
+        dev.setEmployeeId(701);
+        dev.setName("Vikram");
+        dev.displayEmployee();
+        dev.writeCode();
+        dev.conductResearch();
+    }
+}
+
+
+
+// Q20. University Employee System - Integrated OOP
+
+import java.util.Scanner;
+
+interface ResearcherQ20 {
+    void conductResearch();
+}
+
+abstract class EmployeeQ20 {
+    private int employeeId;
+    private String employeeName;
+    private double salary;
+
+    public EmployeeQ20(int id, String name, double salary) {
+        this.employeeId = id;
+        this.employeeName = name;
+        this.salary = salary;
+    }
+
+    public int getEmployeeId() { return employeeId; }
+    public String getEmployeeName() { return employeeName; }
+    public double getSalary() { return salary; }
+
+    public void displayDetails() {
+        System.out.println("ID: " + employeeId + ", Name: " + employeeName + ", Base Salary: ₹" + salary);
+    }
+
+    abstract void calculateSalary();
+}
+
+class TeacherQ20 extends EmployeeQ20 implements ResearcherQ20 {
+    String subject;
+
+    public TeacherQ20(int id, String name, double salary, String subject) {
+        super(id, name, salary);
+        this.subject = subject;
+    }
+
+    @Override
+    void calculateSalary() {
+        double total = getSalary() + 10000;
+        System.out.println("Teacher (" + subject + ") Total Salary: ₹" + total);
+    }
+
+    @Override
+    public void conductResearch() {
+        System.out.println(getEmployeeName() + " is conducting academic research in " + subject);
+    }
+}
+
+class VisitingTeacher extends EmployeeQ20 {
+    int hoursWorked;
+    double ratePerHour;
+
+    public VisitingTeacher(int id, String name, int hours, double rate) {
+        super(id, name, 0);
+        this.hoursWorked = hours;
+        this.ratePerHour = rate;
+    }
+
+    @Override
+    void calculateSalary() {
+        double total = hoursWorked * ratePerHour;
+        System.out.println("Visiting Teacher Total Salary (" + hoursWorked + " hrs): ₹" + total);
+    }
+}
+
+class Admin extends EmployeeQ20 {
+    String department;
+
+    public Admin(int id, String name, double salary, String department) {
+        super(id, name, salary);
+        this.department = department;
+    }
+
+    @Override
+    void calculateSalary() {
+        double total = getSalary() + 15000;
+        System.out.println("Admin (" + department + ") Total Salary: ₹" + total);
+    }
+
+    void manageDepartment() {
+        System.out.println(getEmployeeName() + " is managing the " + department + " department.");
+    }
+}
+
+public class Lab07_Q20 {
+    public static void main(String[] args) {
+        System.out.println("--- Q20: University Employee System (Integrated OOP) ---");
+        TeacherQ20 t = new TeacherQ20(901, "Dr. Sharma", 60000, "Computer Science");
+        t.displayDetails(); t.calculateSalary(); t.conductResearch();
+
+        System.out.println();
+        VisitingTeacher vt = new VisitingTeacher(902, "Prof. Verma", 25, 1200);
+        vt.displayDetails(); vt.calculateSalary();
+
+        System.out.println();
+        Admin adm = new Admin(903, "Mr. Kapoor", 50000, "Examinations");
+        adm.displayDetails(); adm.calculateSalary(); adm.manageDepartment();
+    }
+}
